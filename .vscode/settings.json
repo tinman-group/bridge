@@ -1,0 +1,28 @@
+{
+  "deno.enable": false,
+
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "**/.branches": true,
+    "**/.temp": true,
+    "node_modules": true
+  },
+
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "always"
+  },
+
+  "prettier.proseWrap": "always",
+  "prettier.printWidth": 80,
+
+  "files.associations": {
+    "*.css": "tailwindcss"
+  }
+}
