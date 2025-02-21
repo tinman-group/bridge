@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import { type ComponentType } from "react"
-import type { Route } from 'next'
+import type { Route } from "next";
+import { type ComponentType } from "react";
 
 import {
   AudioWaveform,
@@ -12,45 +12,44 @@ import {
   PieChart,
   Settings2,
   SquareTerminal,
-} from "lucide-react"
+} from "lucide-react";
 
-import { NavMain } from "@/components/nav-main"
-import { NavProjects } from "@/components/nav-projects"
-import { NavUser } from "@/components/nav-user"
-import { TeamSwitcher } from "@/components/team-switcher"
+import { NavMain } from "@/components/nav-main";
+import { NavProjects } from "@/components/nav-projects";
+import { NavUser } from "@/components/nav/nav-user";
+import { TeamSwitcher } from "@/components/nav/team-switcher";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
-} from "@/components/ui/sidebar"
-import { useSessionStore } from "@/state/session"
+} from "@/components/ui/sidebar";
 
 export type NavItem = {
-  title: string
-  url: Route
-  icon?: ComponentType
-}
+  title: string;
+  url: Route;
+  icon?: ComponentType;
+};
 
 export type NavMainItem = NavItem & {
-  isActive?: boolean
-  items?: NavItem[]
-}
+  isActive?: boolean;
+  items?: NavItem[];
+};
 
 type Data = {
   user: {
-    name: string
-    email: string
-  }
+    name: string;
+    email: string;
+  };
   teams: {
-    name: string
-    logo: ComponentType
-    plan: string
-  }[]
-  navMain: NavMainItem[]
-  projects: NavItem[]
-}
+    name: string;
+    logo: ComponentType;
+    plan: string;
+  }[];
+  navMain: NavMainItem[];
+  projects: NavItem[];
+};
 
 // This is sample data.
 const data: Data = {
@@ -137,15 +136,22 @@ const data: Data = {
       icon: Map,
     },
   ],
-}
+};
 
 // TODO Add a theme switcher
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { session } = useSessionStore()
+  const session = {
+    user: {
+      firstName: "John",
+      lastName: "Doe",
+      email: "john.doe@example.com",
+      avatar: "https://avatar.iran.liara.run/public",
+    },
+  };
 
   return (
     <Sidebar collapsible="icon" {...props}>
-      <SidebarHeader>
+      <SidebarHeader className="flex-col">
         <TeamSwitcher teams={data.teams} />
       </SidebarHeader>
       <SidebarContent>
@@ -153,13 +159,16 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavProjects projects={data.projects} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={{
-          name: session?.user?.firstName || "",
-          email: session?.user?.email || "",
-          avatar: session?.user?.avatar || "https://avatar.iran.liara.run/public"
-        }} />
+        <NavUser
+          user={{
+            name: session?.user?.firstName || "",
+            email: session?.user?.email || "",
+            avatar:
+              session?.user?.avatar || "https://avatar.iran.liara.run/public",
+          }}
+        />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
-  )
+  );
 }

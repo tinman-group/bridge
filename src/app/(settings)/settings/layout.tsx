@@ -1,25 +1,23 @@
-import { getSessionFromCookie } from "@/utils/auth";
-import { redirect } from "next/navigation";
 import { AppSidebar } from "@/components/app-sidebar";
 import { Separator } from "@/components/ui/separator";
-import { SettingsSidebar } from "./settings-sidebar";
 import {
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
-} from "@/components/ui/sidebar";
+} from "@/components/ui/sidebarx";
 import { SettingsBreadcrumbs } from "./settings-breadcrumbs";
+import { SettingsSidebar } from "./settings-sidebar";
 
 export default async function SettingsLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getSessionFromCookie();
+  // const session = await getSessionFromCookie();
 
-  if (!session) {
-    redirect("/sign-in");
-  }
+  // if (!session) {
+  //   redirect("/sign-in");
+  // }
 
   return (
     <SidebarProvider>
@@ -37,13 +35,10 @@ export default async function SettingsLayout({
             <aside className="lg:w-1/5">
               <SettingsSidebar />
             </aside>
-            <div className="flex-1">
-              {children}
-            </div>
+            <div className="flex-1">{children}</div>
           </div>
         </div>
       </SidebarInset>
     </SidebarProvider>
   );
 }
-

@@ -1,29 +1,46 @@
 "use client";
 
-import { signUpAction } from "./sign-up.actions";
+import {
+  type PasskeyEmailSchema,
+  passkeyEmailSchema,
+} from "@/schemas/passkey.schema";
 import { type SignUpSchema, signUpSchema } from "@/schemas/signup.schema";
-import { type PasskeyEmailSchema, passkeyEmailSchema } from "@/schemas/passkey.schema";
-import { startPasskeyRegistrationAction, completePasskeyRegistrationAction } from "./passkey-sign-up.actions";
+import {
+  completePasskeyRegistrationAction,
+  startPasskeyRegistrationAction,
+} from "./passkey-sign-up.actions";
+import { signUpAction } from "./sign-up.actions";
 
-import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import SeparatorWithText from "@/components/separator-with-text";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Spinner } from "@/components/ui/spinner";
 import { Captcha } from "@/components/captcha";
+import SeparatorWithText from "@/components/separator-with-text";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Spinner } from "@/components/ui/spinner";
 
-import { useForm, useWatch } from "react-hook-form";
+import { useConfigStore } from "@/stores/config";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { toast } from "sonner";
-import { useServerAction } from "zsa-react";
+import { startRegistration } from "@simplewebauthn/browser";
+import { KeyIcon } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import SSOButtons from "../_components/sso-buttons";
 import { useState } from "react";
-import { startRegistration } from "@simplewebauthn/browser";
-import { KeyIcon } from 'lucide-react'
-import { useConfigStore } from "@/state/config";
+import { useForm, useWatch } from "react-hook-form";
+import { toast } from "sonner";
+import { useServerAction } from "zsa-react";
+import SSOButtons from "../_components/sso-buttons";
 
 const SignUpPage = () => {
   const router = useRouter();
@@ -33,63 +50,69 @@ const SignUpPage = () => {
 
   const { execute: signUp } = useServerAction(signUpAction, {
     onError: (error) => {
-      toast.dismiss()
-      toast.error(error.err?.message)
+      toast.dismiss();
+      toast.error(error.err?.message);
     },
     onStart: () => {
-      toast.loading("Creating your account...")
+      toast.loading("Creating your account...");
     },
     onSuccess: () => {
-      toast.dismiss()
-      toast.success("Account created successfully")
-      router.push("/dashboard")
-    }
-  })
-
-  const { execute: completePasskeyRegistration } = useServerAction(completePasskeyRegistrationAction, {
-    onError: (error) => {
-      toast.dismiss()
-      toast.error(error.err?.message)
-      setIsRegistering(false)
+      toast.dismiss();
+      toast.success("Account created successfully");
+      router.push("/dashboard");
     },
-    onSuccess: () => {
-      toast.dismiss()
-      toast.success("Account created successfully")
-      router.push("/dashboard")
-    }
-  })
+  });
 
-  const { execute: startPasskeyRegistration } = useServerAction(startPasskeyRegistrationAction, {
-    onError: (error) => {
-      toast.dismiss()
-      toast.error(error.err?.message)
-      setIsRegistering(false)
+  const { execute: completePasskeyRegistration } = useServerAction(
+    completePasskeyRegistrationAction,
+    {
+      onError: (error) => {
+        toast.dismiss();
+        toast.error(error.err?.message);
+        setIsRegistering(false);
+      },
+      onSuccess: () => {
+        toast.dismiss();
+        toast.success("Account created successfully");
+        router.push("/dashboard");
+      },
     },
-    onStart: () => {
-      toast.loading("Starting passkey registration...")
-      setIsRegistering(true)
-    },
-    onSuccess: async (response) => {
-      toast.dismiss()
-      if (!response?.data?.optionsJSON) {
-        toast.error("Failed to start passkey registration")
-        setIsRegistering(false)
-        return;
-      }
+  );
 
-      try {
-        const attResp = await startRegistration({
-          optionsJSON: response.data.optionsJSON,
-          useAutoRegister: true,
-        });
-        await completePasskeyRegistration({ response: attResp });
-      } catch (error: unknown) {
-        console.error("Failed to register passkey:", error);
-        toast.error("Failed to register passkey")
-        setIsRegistering(false)
-      }
-    }
-  })
+  const { execute: startPasskeyRegistration } = useServerAction(
+    startPasskeyRegistrationAction,
+    {
+      onError: (error) => {
+        toast.dismiss();
+        toast.error(error.err?.message);
+        setIsRegistering(false);
+      },
+      onStart: () => {
+        toast.loading("Starting passkey registration...");
+        setIsRegistering(true);
+      },
+      onSuccess: async (response) => {
+        toast.dismiss();
+        if (!response?.data?.optionsJSON) {
+          toast.error("Failed to start passkey registration");
+          setIsRegistering(false);
+          return;
+        }
+
+        try {
+          const attResp = await startRegistration({
+            optionsJSON: response.data.optionsJSON,
+            useAutoRegister: true,
+          });
+          await completePasskeyRegistration({ response: attResp });
+        } catch (error: unknown) {
+          console.error("Failed to register passkey:", error);
+          toast.error("Failed to register passkey");
+          setIsRegistering(false);
+        }
+      },
+    },
+  );
 
   const form = useForm<SignUpSchema>({
     resolver: zodResolver(signUpSchema),
@@ -99,16 +122,22 @@ const SignUpPage = () => {
     resolver: zodResolver(passkeyEmailSchema),
   });
 
-  const captchaToken = useWatch({ control: form.control, name: 'captchaToken' });
-  const passkeyCaptchaToken = useWatch({ control: passkeyForm.control, name: 'captchaToken' });
+  const captchaToken = useWatch({
+    control: form.control,
+    name: "captchaToken",
+  });
+  const passkeyCaptchaToken = useWatch({
+    control: passkeyForm.control,
+    name: "captchaToken",
+  });
 
   const onSubmit = async (data: SignUpSchema) => {
-    signUp(data)
-  }
+    signUp(data);
+  };
 
   const onPasskeySubmit = async (data: PasskeyEmailSchema) => {
-    startPasskeyRegistration(data)
-  }
+    startPasskeyRegistration(data);
+  };
 
   return (
     <div className="min-h-[90vh] flex items-center px-4 justify-center bg-background my-6 md:my-10">
@@ -119,7 +148,10 @@ const SignUpPage = () => {
           </h2>
           <p className="mt-2 text-muted-foreground">
             Already have an account?{" "}
-            <Link href="/sign-in" className="font-medium text-primary hover:text-primary/90 underline">
+            <Link
+              href="/sign-in"
+              className="font-medium text-primary hover:text-primary/90 underline"
+            >
               Sign in
             </Link>
           </p>
@@ -142,7 +174,10 @@ const SignUpPage = () => {
         </SeparatorWithText>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="mt-8 space-y-4">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="mt-8 space-y-4"
+          >
             <FormField
               control={form.control}
               name="email"
@@ -215,7 +250,7 @@ const SignUpPage = () => {
 
             <div className="flex flex-col justify-center items-center">
               <Captcha
-                onSuccess={(token) => form.setValue('captchaToken', token)}
+                onSuccess={(token) => form.setValue("captchaToken", token)}
                 validationError={form.formState.errors.captchaToken?.message}
               />
 
@@ -233,11 +268,17 @@ const SignUpPage = () => {
         <div className="mt-6">
           <p className="text-xs text-center text-muted-foreground">
             By signing up, you agree to our{" "}
-            <Link href="/terms" className="font-medium text-primary hover:text-primary/90 underline">
+            <Link
+              href="/terms"
+              className="font-medium text-primary hover:text-primary/90 underline"
+            >
               Terms of Service
             </Link>{" "}
             and{" "}
-            <Link href="/privacy" className="font-medium text-primary hover:text-primary/90 underline">
+            <Link
+              href="/privacy"
+              className="font-medium text-primary hover:text-primary/90 underline"
+            >
               Privacy Policy
             </Link>
           </p>
@@ -250,7 +291,10 @@ const SignUpPage = () => {
             <DialogTitle>Sign up with a Passkey</DialogTitle>
           </DialogHeader>
           <Form {...passkeyForm}>
-            <form onSubmit={passkeyForm.handleSubmit(onPasskeySubmit)} className="space-y-6 mt-6">
+            <form
+              onSubmit={passkeyForm.handleSubmit(onPasskeySubmit)}
+              className="space-y-6 mt-6"
+            >
               <FormField
                 control={passkeyForm.control}
                 name="email"
@@ -305,14 +349,21 @@ const SignUpPage = () => {
               />
               <div className="flex flex-col justify-center items-center">
                 <Captcha
-                  onSuccess={(token) => passkeyForm.setValue('captchaToken', token)}
-                  validationError={passkeyForm.formState.errors.captchaToken?.message}
+                  onSuccess={(token) =>
+                    passkeyForm.setValue("captchaToken", token)
+                  }
+                  validationError={
+                    passkeyForm.formState.errors.captchaToken?.message
+                  }
                 />
 
                 <Button
                   type="submit"
                   className="w-full mt-8"
-                  disabled={isRegistering || Boolean(isTurnstileEnabled && !passkeyCaptchaToken)}
+                  disabled={
+                    isRegistering ||
+                    Boolean(isTurnstileEnabled && !passkeyCaptchaToken)
+                  }
                 >
                   {isRegistering ? (
                     <>
@@ -326,7 +377,9 @@ const SignUpPage = () => {
               </div>
               {!isRegistering && (
                 <p className="text-xs text-muted text-center mt-4">
-                  After clicking continue, your browser will prompt you to create and save your Passkey. This will allow you to sign in securely without a password in the future.
+                  After clicking continue, your browser will prompt you to
+                  create and save your Passkey. This will allow you to sign in
+                  securely without a password in the future.
                 </p>
               )}
             </form>

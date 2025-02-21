@@ -1,9 +1,7 @@
-import { getSessionFromCookie } from "@/utils/auth";
-import { redirect } from "next/navigation";
-import { SettingsForm } from "../settings-form";
-import { Suspense } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Suspense } from "react";
+import { SettingsForm } from "../settings-form";
 
 function SettingsFormSkeleton() {
   return (
@@ -45,11 +43,11 @@ function SettingsFormSkeleton() {
 export default async function SettingsPage(__ignoreprops: {
   params: { segment: string[] };
 }) {
-  const session = await getSessionFromCookie();
+  // const session = await getSessionFromCookie();
 
-  if (!session) {
-    redirect("/sign-in");
-  }
+  // if (!session) {
+  //   redirect("/sign-in");
+  // }
 
   return (
     <div className="grid gap-4">

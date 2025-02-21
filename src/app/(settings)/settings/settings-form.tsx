@@ -1,9 +1,13 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
 import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {
   Form,
   FormControl,
@@ -14,45 +18,50 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { toast } from "sonner";
-import { updateUserProfileAction } from "./settings.actions";
-import { useEffect } from "react";
-import { useSessionStore } from "@/state/session";
-import { userSettingsSchema } from "@/schemas/settings.schema";
-import { useServerAction } from "zsa-react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { userSettingsSchema } from "@/schemas/settings.schema";
+import { useSessionStore } from "@/stores/session";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import * as z from "zod";
+import { useServerAction } from "zsa-react";
+import { updateUserProfileAction } from "./settings.actions";
 
 export function SettingsForm() {
-  const router = useRouter()
+  const router = useRouter();
 
-  const { execute: updateUserProfile } = useServerAction(updateUserProfileAction, {
-    onError: (error) => {
-      toast.dismiss()
-      toast.error(error.err?.message)
+  const { execute: updateUserProfile } = useServerAction(
+    updateUserProfileAction,
+    {
+      onError: (error) => {
+        toast.dismiss();
+        toast.error(error.err?.message);
+      },
+      onStart: () => {
+        toast.loading("Signing you in...");
+      },
+      onSuccess: () => {
+        toast.dismiss();
+        toast.success("Signed in successfully");
+        router.refresh();
+      },
     },
-    onStart: () => {
-      toast.loading("Signing you in...")
-    },
-    onSuccess: () => {
-      toast.dismiss()
-      toast.success("Signed in successfully")
-      router.refresh()
-    }
-  })
+  );
 
   const { session, isLoading } = useSessionStore();
   const form = useForm<z.infer<typeof userSettingsSchema>>({
-    resolver: zodResolver(userSettingsSchema)
+    resolver: zodResolver(userSettingsSchema),
   });
 
   useEffect(() => {
     form.reset({
-      firstName: session?.user.firstName ?? '',
-      lastName: session?.user.lastName ?? '',
+      firstName: session?.user.firstName ?? "",
+      lastName: session?.user.lastName ?? "",
     });
-  }, [session])
+  }, [session]);
 
   if (!session || isLoading) {
     return (
@@ -92,7 +101,7 @@ export function SettingsForm() {
   }
 
   async function onSubmit(values: z.infer<typeof userSettingsSchema>) {
-    updateUserProfile(values)
+    updateUserProfile(values);
   }
 
   return (
@@ -135,15 +144,10 @@ export function SettingsForm() {
               />
             </div>
 
-
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input
-                  type="email"
-                  disabled
-                  value={session.user.email ?? ''}
-                />
+                <Input type="email" disabled value={session.user.email ?? ""} />
               </FormControl>
               <FormDescription>
                 This is the email you use to sign in.
@@ -152,9 +156,7 @@ export function SettingsForm() {
             </FormItem>
 
             <div className="flex justify-end">
-              <Button type="submit">
-                Save changes
-              </Button>
+              <Button type="submit">Save changes</Button>
             </div>
           </form>
         </Form>

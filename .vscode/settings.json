@@ -10,7 +10,9 @@
     "**/Thumbs.db": true,
     "**/.branches": true,
     "**/.temp": true,
-    "node_modules": true
+    "node_modules": true,
+    ".next": true,
+    ".wrangler": true
   },
 
   "editor.formatOnSave": true,

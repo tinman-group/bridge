@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
-import { ThemeProvider } from "@/components/providers";
+import { Provider as JotaiProvider } from "jotai";
+import { ThemeProvider } from "next-themes";
+
 import { Toaster } from "@/components/ui/sonner";
-import { getSessionFromCookie } from "@/utils/auth";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { SITE_NAME, SITE_DESCRIPTION, SITE_URL } from "@/constants";
-import { getConfig } from "@/flags";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/constants";
+import { PropsWithChildren } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,7 +19,14 @@ export const metadata: Metadata = {
   },
   description: SITE_DESCRIPTION,
   metadataBase: new URL(SITE_URL),
-  keywords: ["SaaS", "Next.js", "React", "TypeScript", "Cloudflare Workers", "Edge Computing"],
+  keywords: [
+    "SaaS",
+    "Next.js",
+    "React",
+    "TypeScript",
+    "Cloudflare Workers",
+    "Edge Computing",
+  ],
   authors: [{ name: "Lubomir Georgiev" }],
   creator: "Lubomir Georgiev",
   openGraph: {
@@ -48,33 +56,30 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function BaseLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  const session = await getSessionFromCookie();
-  const config = await getConfig();
-
+export default async ({ children }: PropsWithChildren) => {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          session={session}
-          config={config}
-        >
-          <TooltipProvider
-            delayDuration={100}
-            skipDelayDuration={50}
+        <JotaiProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
           >
-            {children}
-            <Toaster richColors closeButton position="top-right" expand duration={7000} />
-          </TooltipProvider>
-        </ThemeProvider>
+            <TooltipProvider delayDuration={100} skipDelayDuration={50}>
+              {children}
+              <Toaster
+                richColors
+                closeButton
+                position="top-right"
+                expand
+                duration={7000}
+              />
+            </TooltipProvider>
+          </ThemeProvider>
+        </JotaiProvider>
       </body>
     </html>
   );
-}
+};

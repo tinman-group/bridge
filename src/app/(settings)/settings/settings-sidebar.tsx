@@ -1,30 +1,24 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { cn } from "@/lib/utils";
-import { ScrollShadow } from '@heroui/react'
-import {
-  User,
-  Smartphone,
-  Lock,
-  LogOut
-} from "lucide-react";
-import { useMediaQuery } from "@/hooks/useMediaQuery";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogClose,
 } from "@/components/ui/dialog";
-import { Button, buttonVariants } from "@/components/ui/button";
-import { useRef } from "react";
-import type { Route } from "next";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 import useSignOut from "@/hooks/useSignOut";
+import { cn } from "@/lib/utils";
+import { Lock, LogOut, Smartphone, User } from "lucide-react";
+import type { Route } from "next";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useRef } from "react";
 
 interface SidebarNavItem {
   title: string;
@@ -57,15 +51,15 @@ const sidebarNavItems: SidebarNavItem[] = [
 
 export function SettingsSidebar() {
   const pathname = usePathname();
-  const isLgAndSmaller = useMediaQuery('LG_AND_SMALLER')
+  const isLgAndSmaller = useMediaQuery("LG_AND_SMALLER");
   const dialogCloseRef = useRef<HTMLButtonElement>(null);
   const { signOut } = useSignOut();
 
   return (
-    <ScrollShadow
+    <div
       className="w-full lg:w-auto whitespace-nowrap pb-2"
-      orientation="horizontal"
-      isEnabled={isLgAndSmaller}
+      // orientation="horizontal"
+      // isEnabled={isLgAndSmaller}
     >
       <nav className="flex items-center lg:items-stretch min-w-full space-x-2 pb-2 lg:pb-0 lg:flex-col lg:space-x-0 lg:space-y-1">
         {sidebarNavItems.map((item) => (
@@ -77,7 +71,7 @@ export function SettingsSidebar() {
               pathname === item.href
                 ? "bg-muted hover:bg-muted dark:text-foreground dark:hover:text-foreground/70"
                 : "hover:bg-transparent",
-              "justify-start hover:no-underline whitespace-nowrap"
+              "justify-start hover:no-underline whitespace-nowrap",
             )}
           >
             <item.icon className="mr-2 h-4 w-4" />
@@ -90,7 +84,7 @@ export function SettingsSidebar() {
             <button
               className={cn(
                 buttonVariants({ variant: "destructive" }),
-                "justify-start hover:no-underline whitespace-nowrap lg:mt-4 bg-red-700/25 hover:bg-red-600/40"
+                "justify-start hover:no-underline whitespace-nowrap lg:mt-4 bg-red-700/25 hover:bg-red-600/40",
               )}
             >
               <LogOut className="mr-2 h-4 w-4" />
@@ -121,6 +115,6 @@ export function SettingsSidebar() {
           </DialogContent>
         </Dialog>
       </nav>
-    </ScrollShadow>
+    </div>
   );
 }
