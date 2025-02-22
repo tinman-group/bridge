@@ -1,0 +1,8 @@
+{
+  "ignorePatterns": ["apps/**", "packages/**"],
+  "extends": ["@tinman/configs/eslint.base"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": true,
+  },
+}

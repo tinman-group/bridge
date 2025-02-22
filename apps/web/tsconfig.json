@@ -1,0 +1,20 @@
+{
+  "extends": "@workspace/configs/tsconfig.next.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "~ui/*": ["../../packages/ui/*"]
+    },
+    "types": ["@cloudflare/workers-types/2023-07-01"]
+  },
+  "include": [
+    "next-env.d.ts",
+    "next.config.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "custom-env.d.ts"
+  ],
+  "exclude": ["node_modules"]
+}

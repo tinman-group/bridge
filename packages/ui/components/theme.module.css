@@ -1,0 +1,9 @@
+.toggle {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: calc(var(--spacing) * 14);
+  left: calc(var(--spacing) * 2);
+  height: 100%;
+}

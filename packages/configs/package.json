@@ -1,0 +1,32 @@
+{
+  "name": "@workspace/configs",
+  "version": "0.0.0",
+  "type": "module",
+  "private": true,
+  "scripts": {},
+  "exports": {
+    "./eslint.base.js": "./eslint.base.js",
+    "./eslint.next.js": "./eslint.next.js",
+    "./eslint.react.js": "./eslint.react.js",
+    "./tsconfig.react.json": "./tsconfig.react.json",
+    "./tsconfig.base.json": "./tsconfig.base.json",
+    "./tsconfig.next.json": "./tsconfig.next.json"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@next/eslint-plugin-next": "^15.1.0",
+    "@typescript-eslint/eslint-plugin": "^8.15.0",
+    "@typescript-eslint/parser": "^8.15.0",
+    "eslint": "^9.20.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-only-warn": "^1.1.0",
+    "eslint-plugin-react": "^7.37.4",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "eslint-plugin-turbo": "^2.4.2",
+    "globals": "^15.15.0",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.24.1"
+  }
+}
