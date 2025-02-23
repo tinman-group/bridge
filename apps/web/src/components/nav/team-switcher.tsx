@@ -20,10 +20,10 @@ export function TeamSwitcher({
 
   return (
     <Sidebar.Menu className="flex-auto">
-      <Sidebar.MenuItem className="flex flex-col flex-auto">
+      <Sidebar.MenuItem className="flex-auto">
         <DropdownMenu.Root>
           <DropdownMenu.Trigger>
-            <Sidebar.MenuButton>
+            <Sidebar.MenuButton className="h-full">
               <div className="flex aspect-square size-8 items-center  justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
                 <activeTeam.logo className="size-4" />
               </div>

@@ -9,7 +9,7 @@ export * from "./card.tsx";
 export * from "./collapsible.tsx";
 export * from "./container.tsx";
 export * from "./dialog.tsx";
-export * from "./dropdown-menu.tsx";
+export * as DropdownMenu from "./dropdown-menu.tsx";
 export * from "./form.tsx";
 export * from "./icon-button.tsx";
 export * from "./input.tsx";

@@ -3,7 +3,7 @@ import { AppSidebar } from "@/components/nav/sidebar";
 import { Sidebar } from "@workspace/ui";
 import { PropsWithChildren } from "react";
 
-export default async ({ children }: PropsWithChildren) => {
+const Layout = async ({ children }: PropsWithChildren) => {
   return (
     <SidebarProvider className="fixed w-full h-full">
       <AppSidebar />
@@ -11,3 +11,5 @@ export default async ({ children }: PropsWithChildren) => {
     </SidebarProvider>
   );
 };
+
+export default Layout;

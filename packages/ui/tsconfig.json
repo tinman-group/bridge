@@ -1,5 +1,11 @@
 {
-  "extends": "@workspace/configs/tsconfig.react.json",
-  "include": ["."],
+  "extends": "@workspace/configs/tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "~ui/*": ["./*"]
+    }
+  },
+  "include": ["global.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules", "dist"]
 }

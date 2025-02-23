@@ -16,12 +16,7 @@ import {
   SheetTitle,
 } from "./sheet.tsx";
 import { Skeleton } from "./skeleton.tsx";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "./tooltip.tsx";
+import { Tooltip, TooltipProvider } from "./tooltip.tsx";
 
 import { Flex } from "@radix-ui/themes";
 import {
@@ -87,7 +82,7 @@ export const Root = ({
         height="svh"
         data-slot="sidebar"
         className={cn(
-          "bg-sidebar text-sidebar-foreground flex w-(--sidebar-width)",
+          "bg-sidebar text-sidebar-foreground flex flex-col w-(--sidebar-width)",
           className,
         )}
         {...props}
@@ -368,7 +363,7 @@ export const Header = ({ className, ...props }: HeaderProps) => {
     <Container.Header
       data-slot="sidebar-header"
       data-sidebar="header"
-      className={cn("p-0 m-0 border-0", className)}
+      className={cn("", className)}
       {...props}
     />
   );
@@ -383,7 +378,7 @@ export const Footer = ({ className, ...props }: FooterProps) => {
     <Container.Footer
       data-slot="sidebar-footer"
       data-sidebar="footer"
-      className={cn("p-0 m-0 border-0 items-stretch", className)}
+      className={cn("", className)}
       {...props}
     />
   );
@@ -517,7 +512,7 @@ export const Menu = ({ className, ...props }: MenuProps) => {
     <ul
       data-slot="sidebar-menu"
       data-sidebar="menu"
-      className={cn("flex w-full min-w-0 flex-col gap-1", className)}
+      className={cn("flex flex-col gap-1", className)}
       {...props}
     />
   );
@@ -541,7 +536,7 @@ export const MenuItem = ({ className, ...props }: MenuItemProps) => {
 MenuItem.displayName = "SidebarMenuItem";
 
 const sidebarMenuButtonVariants = cva(
-  "peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm outline-hidden ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-data-[sidebar=menu-action]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2! [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0",
+  "peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm outline-hidden ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-data-[sidebar=menu-action]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground  [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0",
   {
     variants: {
       variant: {
@@ -565,7 +560,7 @@ const sidebarMenuButtonVariants = cva(
 export type MenuButtonProps = ComponentProps<"button"> & {
   asChild?: boolean;
   isActive?: boolean;
-  tooltip?: string | ComponentProps<typeof TooltipContent>;
+  tooltip?: string | ComponentProps<typeof Tooltip>;
 } & VariantProps<typeof sidebarMenuButtonVariants>;
 
 export const MenuButton = ({
@@ -597,19 +592,18 @@ export const MenuButton = ({
 
   if (typeof tooltip === "string") {
     tooltip = {
-      children: tooltip,
+      content: tooltip,
     };
   }
 
   return (
-    <Tooltip>
-      <TooltipTrigger asChild>{button}</TooltipTrigger>
-      <TooltipContent
-        side="right"
-        align="center"
-        hidden={state !== "collapsed" || isMobile}
-        {...tooltip}
-      />
+    <Tooltip
+      side="right"
+      align="center"
+      hidden={state !== "collapsed" || isMobile}
+      {...tooltip}
+    >
+      {button}
     </Tooltip>
   );
 };

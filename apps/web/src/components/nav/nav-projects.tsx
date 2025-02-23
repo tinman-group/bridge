@@ -2,15 +2,7 @@
 
 import { Folder, Forward, MoreHorizontal, Trash2 } from "lucide-react";
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-  Sidebar,
-  useSidebar,
-} from "@workspace/ui";
+import { DropdownMenu, Sidebar, useSidebar } from "@workspace/ui";
 import type { NavItem } from "./sidebar";
 
 type Props = {
@@ -32,33 +24,33 @@ export function NavProjects({ projects }: Props) {
                 <span>{item.title}</span>
               </a>
             </Sidebar.MenuButton>
-            <DropdownMenu>
-              <DropdownMenuTrigger>
+            <DropdownMenu.Root>
+              <DropdownMenu.Trigger>
                 <Sidebar.MenuAction showOnHover>
                   <MoreHorizontal />
                   <span className="sr-only">More</span>
                 </Sidebar.MenuAction>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent
+              </DropdownMenu.Trigger>
+              <DropdownMenu.Content
                 className="w-48 rounded-lg"
                 side={isMobile ? "bottom" : "right"}
                 align={isMobile ? "end" : "start"}
               >
-                <DropdownMenuItem>
+                <DropdownMenu.Item>
                   <Folder className="text-muted-foreground" />
                   <span>View Project</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
+                </DropdownMenu.Item>
+                <DropdownMenu.Item>
                   <Forward className="text-muted-foreground" />
                   <span>Share Project</span>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
+                </DropdownMenu.Item>
+                <DropdownMenu.Separator />
+                <DropdownMenu.Item>
                   <Trash2 className="text-muted-foreground" />
                   <span>Delete Project</span>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+                </DropdownMenu.Item>
+              </DropdownMenu.Content>
+            </DropdownMenu.Root>
           </Sidebar.MenuItem>
         ))}
         <Sidebar.MenuItem>
