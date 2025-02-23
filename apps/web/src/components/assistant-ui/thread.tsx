@@ -35,7 +35,7 @@ export const ThreadProvider = ({ children }: PropsWithChildren) => (
 );
 
 export const ThreadHistory = () => (
-  <ThreadPrimitive.Viewport className="flex flex-auto flex-col items-center scroll-smooth bg-inherit px-4 pt-8 pb-8 prose overflow-y-auto">
+  <ThreadPrimitive.Viewport className="flex flex-auto flex-col items-center scroll-smooth bg-inherit px-4 pt-8 pb-8 overflow-y-auto">
     <ThreadWelcome />
 
     <ThreadPrimitive.Messages

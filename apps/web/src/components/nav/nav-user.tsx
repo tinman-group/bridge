@@ -11,11 +11,6 @@ import {
 
 // import useSignOut from "@/hooks/useSignOut";
 import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@workspace/ui/components/avatar";
-import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
@@ -23,13 +18,14 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@workspace/ui/components/dropdown-menu";
-import {
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
+  Sidebar,
   useSidebar,
-} from "@workspace/ui/components/sidebar";
+} from "@workspace/ui";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@workspace/ui/components/avatar";
 import { useRouter } from "next/navigation";
 
 export function NavUser({
@@ -48,11 +44,11 @@ export function NavUser({
   const { isMobile } = useSidebar();
   const router = useRouter();
   return (
-    <SidebarMenu className="flex-auto">
-      <SidebarMenuItem className="flex flex-col flex-auto">
+    <Sidebar.Menu className="flex-auto">
+      <Sidebar.MenuItem className="flex flex-col flex-auto">
         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <SidebarMenuButton className="flex flex-auto flex-row align-middle rounded-none data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground px-2 group-data-[collapsible=icon]:size-auto!">
+          <DropdownMenuTrigger>
+            <Sidebar.MenuButton className="flex flex-auto flex-row align-middle rounded-none data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground px-2 group-data-[collapsible=icon]:size-auto!">
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarImage src={user.avatar} alt={user.name} />
                 <AvatarFallback className="rounded-lg">CN</AvatarFallback>
@@ -62,7 +58,7 @@ export function NavUser({
                 <span className="truncate text-xs">{user.email}</span>
               </div>
               <ChevronsUpDown className="relative ml-auto top-px size-4" />
-            </SidebarMenuButton>
+            </Sidebar.MenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
             className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
@@ -116,7 +112,7 @@ export function NavUser({
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-      </SidebarMenuItem>
-    </SidebarMenu>
+      </Sidebar.MenuItem>
+    </Sidebar.Menu>
   );
 }

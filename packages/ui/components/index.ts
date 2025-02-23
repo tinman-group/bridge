@@ -1,3 +1,5 @@
+export { useSidebar } from "./sidebar.tsx";
+
 export * from "./accordion.tsx";
 export * from "./avatar.tsx";
 export * from "./badge.tsx";
@@ -13,8 +15,8 @@ export * from "./icon-button.tsx";
 export * from "./input.tsx";
 export * from "./label.tsx";
 export * from "./separator.tsx";
-export * from "./sheet.tsx";
-export * from "./sidebar.tsx";
+export * as Sheet from "./sheet.tsx";
+export * as Sidebar from "./sidebar.tsx";
 export * from "./skeleton.tsx";
 export * from "./sonner.tsx";
 export * from "./spinner.tsx";

@@ -8,16 +8,9 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@workspace/ui/components/dropdown-menu";
-import {
-  SidebarGroup,
-  SidebarGroupLabel,
-  SidebarMenu,
-  SidebarMenuAction,
-  SidebarMenuButton,
-  SidebarMenuItem,
+  Sidebar,
   useSidebar,
-} from "@workspace/ui/components/sidebar";
+} from "@workspace/ui";
 import type { NavItem } from "./sidebar";
 
 type Props = {
@@ -28,23 +21,23 @@ export function NavProjects({ projects }: Props) {
   const { isMobile } = useSidebar();
 
   return (
-    <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-      <SidebarGroupLabel>Projects</SidebarGroupLabel>
-      <SidebarMenu>
+    <Sidebar.Group className="group-data-[collapsible=icon]:hidden">
+      <Sidebar.GroupLabel>Projects</Sidebar.GroupLabel>
+      <Sidebar.Menu>
         {projects.map((item) => (
-          <SidebarMenuItem key={item.title}>
-            <SidebarMenuButton asChild>
+          <Sidebar.MenuItem key={item.title}>
+            <Sidebar.MenuButton asChild>
               <a href={item.url}>
                 {item?.icon && <item.icon />}
                 <span>{item.title}</span>
               </a>
-            </SidebarMenuButton>
+            </Sidebar.MenuButton>
             <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <SidebarMenuAction showOnHover>
+              <DropdownMenuTrigger>
+                <Sidebar.MenuAction showOnHover>
                   <MoreHorizontal />
                   <span className="sr-only">More</span>
-                </SidebarMenuAction>
+                </Sidebar.MenuAction>
               </DropdownMenuTrigger>
               <DropdownMenuContent
                 className="w-48 rounded-lg"
@@ -66,15 +59,15 @@ export function NavProjects({ projects }: Props) {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-          </SidebarMenuItem>
+          </Sidebar.MenuItem>
         ))}
-        <SidebarMenuItem>
-          <SidebarMenuButton className="text-sidebar-foreground/70">
+        <Sidebar.MenuItem>
+          <Sidebar.MenuButton className="text-sidebar-foreground/70">
             <MoreHorizontal className="text-sidebar-foreground/70" />
             <span>More</span>
-          </SidebarMenuButton>
-        </SidebarMenuItem>
-      </SidebarMenu>
-    </SidebarGroup>
+          </Sidebar.MenuButton>
+        </Sidebar.MenuItem>
+      </Sidebar.Menu>
+    </Sidebar.Group>
   );
 }

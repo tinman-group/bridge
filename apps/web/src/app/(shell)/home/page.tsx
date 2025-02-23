@@ -6,16 +6,16 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@workspace/ui/components/breadcrumb";
-import { Container } from "@workspace/ui/components/container";
-import { SidebarTrigger } from "@workspace/ui/components/sidebar";
+  Container,
+  Sidebar,
+} from "@workspace/ui";
 import { ModeToggle } from "~ui/components/theme";
 
 export default function Page() {
   return (
     <Container>
       <Container.Header>
-        <SidebarTrigger />
+        <Sidebar.Trigger />
         <Breadcrumb className="ml-3">
           <BreadcrumbList>
             <BreadcrumbItem>

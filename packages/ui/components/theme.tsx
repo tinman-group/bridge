@@ -37,13 +37,8 @@ export type ToggleProps = ComponentProps<typeof IconButton> & {
   disabled?: boolean;
 };
 
-export const ModeToggle = ({
-  disabled = false,
-  children,
-  ...props
-}: ToggleProps) => {
-  const { mode, resolvedMode, toggleMode, clearMode } = useThemeMode();
-  const isSystem = mode === "system";
+export const ModeToggle = ({ disabled = false, ...props }: ToggleProps) => {
+  const { toggleMode, clearMode } = useThemeMode();
   return (
     <Flex align="center" justify="center" height="100%" width="48">
       <IconButton
