@@ -20,8 +20,7 @@ import type { FC, PropsWithChildren } from "react";
 
 import { MarkdownText } from "@/components/assistant-ui/markdown-text";
 import { TooltipIconButton } from "@/components/assistant-ui/tooltip-icon-button";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, Button } from "@workspace/ui";
 
 export const ThreadProvider = ({ children }: PropsWithChildren) => (
   <ThreadPrimitive.Root
@@ -131,7 +130,7 @@ const ComposerAction: FC = () => {
         <ComposerPrimitive.Send asChild>
           <TooltipIconButton
             tooltip="Send"
-            variant="default"
+            variant="ghost"
             className="my-2.5 size-8 p-2 transition-opacity ease-in"
           >
             <SendHorizontalIcon />
@@ -142,7 +141,7 @@ const ComposerAction: FC = () => {
         <ComposerPrimitive.Cancel asChild>
           <TooltipIconButton
             tooltip="Cancel"
-            variant="default"
+            variant="ghost"
             className="my-2.5 size-8 p-2 transition-opacity ease-in"
           >
             <CircleStopIcon />

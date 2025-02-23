@@ -1,6 +1,6 @@
 "use client";
 
-import { Flex, Theme as RadixTheme } from "@radix-ui/themes";
+import { Theme as RadixTheme } from "@radix-ui/themes";
 import { Moon, Sun } from "lucide-react";
 import { ThemeProvider } from "next-themes";
 import { ComponentProps, PropsWithChildren } from "react";
@@ -40,30 +40,28 @@ export type ToggleProps = ComponentProps<typeof IconButton> & {
 export const ModeToggle = ({ disabled = false, ...props }: ToggleProps) => {
   const { toggleMode, clearMode } = useThemeMode();
   return (
-    <Flex align="center" justify="center" height="100%" width="48">
-      <IconButton
-        disabled={disabled}
-        size="2"
-        variant={"ghost"}
-        onClick={(ev) => {
-          if (disabled) return;
-          if (ev.shiftKey) clearMode();
-          else toggleMode();
-        }}
-        {...props}
-      >
-        <Moon
-          width={24}
-          height={24}
-          className="rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 hidden dark:block"
-        />
-        <Sun
-          width={24}
-          height={24}
-          className="rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 dark:hidden"
-        />
-      </IconButton>
-    </Flex>
+    <IconButton
+      disabled={disabled}
+      size="2"
+      variant={"ghost"}
+      onClick={(ev) => {
+        if (disabled) return;
+        if (ev.shiftKey) clearMode();
+        else toggleMode();
+      }}
+      {...props}
+    >
+      <Moon
+        width={24}
+        height={24}
+        className="rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 hidden dark:block"
+      />
+      <Sun
+        width={24}
+        height={24}
+        className="rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 dark:hidden"
+      />
+    </IconButton>
   );
 };
 

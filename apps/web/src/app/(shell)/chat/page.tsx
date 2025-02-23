@@ -19,11 +19,10 @@ export default function Page() {
     <AssistantRuntimeProvider runtime={runtime}>
       <ThreadProvider>
         <Container>
-          <Container.Header className="items-center px-4">
+          <Container.Header className="items-center px-4 gap-4">
             <Sidebar.Trigger />
             <Container.Spacer />
             <ThreadListNew />
-            <div className="w-4" />
             <ModeToggle />
           </Container.Header>
           <Container.Content asChild>
