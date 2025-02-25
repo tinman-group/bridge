@@ -18,7 +18,13 @@ import { NavMain } from "@/components/nav/nav-main";
 import { NavProjects } from "@/components/nav/nav-projects";
 import { NavUser } from "@/components/nav/nav-user";
 import { TeamSwitcher } from "@/components/nav/team-switcher";
-import { Sidebar } from "@workspace/ui";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarRail,
+} from "@workspace/ui";
 
 export type NavItem = {
   title: string;
@@ -133,9 +139,7 @@ const data: Data = {
 };
 
 // TODO Add a theme switcher
-export function AppSidebar({
-  ...props
-}: React.ComponentProps<typeof Sidebar.Root>) {
+export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const session = {
     user: {
       firstName: "John",
@@ -146,15 +150,15 @@ export function AppSidebar({
   };
 
   return (
-    <Sidebar.Root collapsible="icon" {...props}>
-      <Sidebar.Header className="flex-col">
+    <Sidebar collapsible="icon" {...props}>
+      <SidebarHeader className="flex-col">
         <TeamSwitcher teams={data.teams} />
-      </Sidebar.Header>
-      <Sidebar.Content>
+      </SidebarHeader>
+      <SidebarContent>
         <NavMain items={data.navMain} />
         <NavProjects projects={data.projects} />
-      </Sidebar.Content>
-      <Sidebar.Footer>
+      </SidebarContent>
+      <SidebarFooter>
         <NavUser
           user={{
             name: session?.user?.firstName || "",
@@ -163,8 +167,8 @@ export function AppSidebar({
               session?.user?.avatar || "https://avatar.iran.liara.run/public",
           }}
         />
-      </Sidebar.Footer>
-      <Sidebar.Rail />
-    </Sidebar.Root>
+      </SidebarFooter>
+      <SidebarRail />
+    </Sidebar>
   );
 }

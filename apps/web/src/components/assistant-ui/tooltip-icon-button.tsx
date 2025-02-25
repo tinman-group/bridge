@@ -1,33 +1,44 @@
 "use client";
 
-import { cn, IconButton, IconButtonProps, Tooltip } from "@workspace/ui";
+import { ComponentProps, forwardRef } from "react";
 
-export type TooltipIconButtonProps = IconButtonProps & {
+import { cn } from "@/lib/utils";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@workspace/ui";
+import { Button } from "~ui/components/button";
+
+export type TooltipIconButtonProps = ComponentProps<typeof Button> & {
   tooltip: string;
   side?: "top" | "bottom" | "left" | "right";
 };
 
-export const TooltipIconButton = ({
-  children,
-  tooltip,
-  side = "bottom",
-  variant = "ghost",
-  size = "1",
-  className,
-  ...rest
-}: TooltipIconButtonProps) => {
+export const TooltipIconButton = forwardRef<
+  HTMLButtonElement,
+  TooltipIconButtonProps
+>(({ children, tooltip, side = "bottom", className, ...rest }, ref) => {
   return (
-    <Tooltip side={side} content={tooltip}>
-      <IconButton
-        variant={variant}
-        size={size}
-        className={cn(className)}
-        {...rest}
-      >
-        {children}
-      </IconButton>
-    </Tooltip>
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button
+            variant="ghost"
+            size="icon"
+            {...rest}
+            className={cn("size-6 p-1", className)}
+            ref={ref}
+          >
+            {children}
+            <span className="sr-only">{tooltip}</span>
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent side={side}>{tooltip}</TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
-};
+});
 
 TooltipIconButton.displayName = "TooltipIconButton";

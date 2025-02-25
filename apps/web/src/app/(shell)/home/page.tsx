@@ -7,7 +7,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
   Container,
-  Sidebar,
+  SidebarTrigger,
 } from "@workspace/ui";
 import { ModeToggle } from "~ui/components/theme";
 
@@ -15,7 +15,7 @@ export default function Page() {
   return (
     <Container>
       <Container.Header>
-        <Sidebar.Trigger />
+        <SidebarTrigger />
         <Breadcrumb className="ml-3">
           <BreadcrumbList>
             <BreadcrumbItem>

@@ -10,7 +10,19 @@ import {
 } from "lucide-react";
 
 // import useSignOut from "@/hooks/useSignOut";
-import { DropdownMenu, Sidebar, useSidebar } from "@workspace/ui";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  useSidebar,
+} from "@workspace/ui";
 import {
   Avatar,
   AvatarFallback,
@@ -32,11 +44,11 @@ export function NavUser({
 
   const { isMobile } = useSidebar();
   return (
-    <Sidebar.Menu className="flex-auto">
-      <Sidebar.MenuItem className="flex-auto">
-        <DropdownMenu.Root>
-          <DropdownMenu.Trigger>
-            <Sidebar.MenuButton className="h-full">
+    <SidebarMenu className="flex-auto">
+      <SidebarMenuItem className="flex-auto">
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <SidebarMenuButton className="h-full">
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarImage src={user.avatar} alt={user.name} />
                 <AvatarFallback className="rounded-lg">CN</AvatarFallback>
@@ -46,15 +58,15 @@ export function NavUser({
                 <span className="truncate text-xs">{user.email}</span>
               </div>
               <ChevronsUpDown className="relative ml-auto top-px size-4" />
-            </Sidebar.MenuButton>
-          </DropdownMenu.Trigger>
-          <DropdownMenu.Content
+            </SidebarMenuButton>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent
             className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
             side={isMobile ? "bottom" : "right"}
             align="end"
             sideOffset={4}
           >
-            <DropdownMenu.Label className="p-0 font-normal">
+            <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
                   <AvatarImage src={user.avatar} alt={user.name} />
@@ -65,31 +77,31 @@ export function NavUser({
                   <span className="truncate text-xs">{user.email}</span>
                 </div>
               </div>
-            </DropdownMenu.Label>
-            <DropdownMenu.Separator />
-            <DropdownMenu.Group>
-              <DropdownMenu.Item className="cursor-pointer">
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              <DropdownMenuItem className="cursor-pointer">
                 <Sparkles />
                 Upgrade to Pro
-              </DropdownMenu.Item>
-            </DropdownMenu.Group>
-            <DropdownMenu.Separator />
-            <DropdownMenu.Group>
-              <DropdownMenu.Item className="cursor-pointer">
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              <DropdownMenuItem className="cursor-pointer">
                 <BadgeCheck />
                 Account
-              </DropdownMenu.Item>
-              <DropdownMenu.Item className="cursor-pointer">
+              </DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer">
                 <CreditCard />
                 Billing
-              </DropdownMenu.Item>
-              <DropdownMenu.Item className="cursor-pointer">
+              </DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer">
                 <Bell />
                 Notifications
-              </DropdownMenu.Item>
-            </DropdownMenu.Group>
-            <DropdownMenu.Separator />
-            <DropdownMenu.Item
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
               onClick={() => {
                 signOut();
               }}
@@ -97,10 +109,10 @@ export function NavUser({
             >
               <LogOut />
               Log out
-            </DropdownMenu.Item>
-          </DropdownMenu.Content>
-        </DropdownMenu.Root>
-      </Sidebar.MenuItem>
-    </Sidebar.Menu>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </SidebarMenuItem>
+    </SidebarMenu>
   );
 }

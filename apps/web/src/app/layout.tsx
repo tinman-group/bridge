@@ -3,9 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/constants";
-import { Toaster } from "@workspace/ui/components/sonner";
-import { ThemeRoot } from "@workspace/ui/components/theme";
-import { TooltipProvider } from "@workspace/ui/components/tooltip";
+import { ThemeProvider, Toaster, TooltipProvider } from "@workspace/ui";
 import { Provider as JotaiProvider } from "jotai";
 import { PropsWithChildren } from "react";
 
@@ -55,12 +53,12 @@ export const metadata: Metadata = {
   },
 };
 
-export default async ({ children }: PropsWithChildren) => {
+const Layout = async ({ children }: PropsWithChildren) => {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <JotaiProvider>
-          <ThemeRoot>
+          <ThemeProvider>
             <TooltipProvider delayDuration={100} skipDelayDuration={50}>
               {children}
               <Toaster
@@ -71,9 +69,11 @@ export default async ({ children }: PropsWithChildren) => {
                 duration={7000}
               />
             </TooltipProvider>
-          </ThemeRoot>
+          </ThemeProvider>
         </JotaiProvider>
       </body>
     </html>
   );
 };
+
+export default Layout;

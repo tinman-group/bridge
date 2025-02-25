@@ -7,7 +7,7 @@ import {
 import { ThreadListNew } from "@/components/assistant-ui/thread-list";
 import { AssistantRuntimeProvider } from "@assistant-ui/react";
 import { useChatRuntime } from "@assistant-ui/react-ai-sdk";
-import { Container, Sidebar } from "@workspace/ui";
+import { Container, SidebarTrigger } from "@workspace/ui";
 import { ModeToggle } from "~ui/components/theme";
 
 export default function Page() {
@@ -20,7 +20,7 @@ export default function Page() {
       <ThreadProvider>
         <Container>
           <Container.Header className="items-center px-4 gap-4">
-            <Sidebar.Trigger />
+            <SidebarTrigger />
             <Container.Spacer />
             <ThreadListNew />
             <ModeToggle />

@@ -6,7 +6,14 @@ import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-  Sidebar,
+  SidebarGroup,
+  SidebarGroupLabel,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
 } from "@workspace/ui";
 import type { Route } from "next";
 import Link from "next/link";
@@ -18,21 +25,21 @@ type Props = {
 
 export function NavMain({ items }: Props) {
   return (
-    <Sidebar.Group>
-      <Sidebar.GroupLabel>Platform</Sidebar.GroupLabel>
-      <Sidebar.Menu>
+    <SidebarGroup>
+      <SidebarGroupLabel>Platform</SidebarGroupLabel>
+      <SidebarMenu>
         {items.map((item) => {
           // If there are no child items, render a direct link
           if (!item.items?.length) {
             return (
-              <Sidebar.MenuItem key={item.title}>
-                <Sidebar.MenuButton asChild tooltip={item.title}>
+              <SidebarMenuItem key={item.title}>
+                <SidebarMenuButton asChild tooltip={item.title}>
                   <Link href={item.url as Route}>
                     {item.icon && <item.icon />}
                     <span>{item.title}</span>
                   </Link>
-                </Sidebar.MenuButton>
-              </Sidebar.MenuItem>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
             );
           }
 
@@ -44,19 +51,19 @@ export function NavMain({ items }: Props) {
               defaultOpen={item.isActive}
               className="group/collapsible"
             >
-              <Sidebar.MenuItem>
+              <SidebarMenuItem>
                 <CollapsibleTrigger asChild>
-                  <Sidebar.MenuButton tooltip={item.title}>
+                  <SidebarMenuButton tooltip={item.title}>
                     {item.icon && <item.icon />}
                     <span>{item.title}</span>
                     <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-                  </Sidebar.MenuButton>
+                  </SidebarMenuButton>
                 </CollapsibleTrigger>
                 <CollapsibleContent>
-                  <Sidebar.MenuSub>
+                  <SidebarMenuSub>
                     {item.items?.map((subItem) => (
-                      <Sidebar.MenuSubItem key={subItem.title}>
-                        <Sidebar.MenuSubButton asChild>
+                      <SidebarMenuSubItem key={subItem.title}>
+                        <SidebarMenuSubButton asChild>
                           {subItem.url.startsWith("/") ? (
                             <Link href={subItem.url as Route}>
                               <span>{subItem.title}</span>
@@ -66,16 +73,16 @@ export function NavMain({ items }: Props) {
                               <span>{subItem.title}</span>
                             </a>
                           )}
-                        </Sidebar.MenuSubButton>
-                      </Sidebar.MenuSubItem>
+                        </SidebarMenuSubButton>
+                      </SidebarMenuSubItem>
                     ))}
-                  </Sidebar.MenuSub>
+                  </SidebarMenuSub>
                 </CollapsibleContent>
-              </Sidebar.MenuItem>
+              </SidebarMenuItem>
             </Collapsible>
           );
         })}
-      </Sidebar.Menu>
-    </Sidebar.Group>
+      </SidebarMenu>
+    </SidebarGroup>
   );
 }

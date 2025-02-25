@@ -1,9 +1,11 @@
 "use client";
 import { useSidebarStore } from "@/stores/sidebar";
-import { Sidebar } from "@workspace/ui";
+import { SidebarProvider } from "@workspace/ui";
 import { ComponentProps } from "react";
 
-export default (props: ComponentProps<typeof Sidebar.Provider>) => {
+const Provider = (props: ComponentProps<typeof SidebarProvider>) => {
   const { isOpen, setIsOpen } = useSidebarStore();
-  return <Sidebar.Provider open={isOpen} onOpenChange={setIsOpen} {...props} />;
+  return <SidebarProvider open={isOpen} onOpenChange={setIsOpen} {...props} />;
 };
+
+export default Provider;

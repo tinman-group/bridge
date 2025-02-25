@@ -2,7 +2,20 @@
 
 import { Folder, Forward, MoreHorizontal, Trash2 } from "lucide-react";
 
-import { DropdownMenu, Sidebar, useSidebar } from "@workspace/ui";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+  SidebarGroup,
+  SidebarGroupLabel,
+  SidebarMenu,
+  SidebarMenuAction,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  useSidebar,
+} from "@workspace/ui";
 import type { NavItem } from "./sidebar";
 
 type Props = {
@@ -13,53 +26,53 @@ export function NavProjects({ projects }: Props) {
   const { isMobile } = useSidebar();
 
   return (
-    <Sidebar.Group className="group-data-[collapsible=icon]:hidden">
-      <Sidebar.GroupLabel>Projects</Sidebar.GroupLabel>
-      <Sidebar.Menu>
+    <SidebarGroup className="group-data-[collapsible=icon]:hidden">
+      <SidebarGroupLabel>Projects</SidebarGroupLabel>
+      <SidebarMenu>
         {projects.map((item) => (
-          <Sidebar.MenuItem key={item.title}>
-            <Sidebar.MenuButton asChild>
+          <SidebarMenuItem key={item.title}>
+            <SidebarMenuButton asChild>
               <a href={item.url}>
                 {item?.icon && <item.icon />}
                 <span>{item.title}</span>
               </a>
-            </Sidebar.MenuButton>
-            <DropdownMenu.Root>
-              <DropdownMenu.Trigger>
-                <Sidebar.MenuAction showOnHover>
+            </SidebarMenuButton>
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <SidebarMenuAction showOnHover>
                   <MoreHorizontal />
                   <span className="sr-only">More</span>
-                </Sidebar.MenuAction>
-              </DropdownMenu.Trigger>
-              <DropdownMenu.Content
+                </SidebarMenuAction>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
                 className="w-48 rounded-lg"
                 side={isMobile ? "bottom" : "right"}
                 align={isMobile ? "end" : "start"}
               >
-                <DropdownMenu.Item>
+                <DropdownMenuItem>
                   <Folder className="text-muted-foreground" />
                   <span>View Project</span>
-                </DropdownMenu.Item>
-                <DropdownMenu.Item>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
                   <Forward className="text-muted-foreground" />
                   <span>Share Project</span>
-                </DropdownMenu.Item>
-                <DropdownMenu.Separator />
-                <DropdownMenu.Item>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
                   <Trash2 className="text-muted-foreground" />
                   <span>Delete Project</span>
-                </DropdownMenu.Item>
-              </DropdownMenu.Content>
-            </DropdownMenu.Root>
-          </Sidebar.MenuItem>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </SidebarMenuItem>
         ))}
-        <Sidebar.MenuItem>
-          <Sidebar.MenuButton className="text-sidebar-foreground/70">
+        <SidebarMenuItem>
+          <SidebarMenuButton className="text-sidebar-foreground/70">
             <MoreHorizontal className="text-sidebar-foreground/70" />
             <span>More</span>
-          </Sidebar.MenuButton>
-        </Sidebar.MenuItem>
-      </Sidebar.Menu>
-    </Sidebar.Group>
+          </SidebarMenuButton>
+        </SidebarMenuItem>
+      </SidebarMenu>
+    </SidebarGroup>
   );
 }
